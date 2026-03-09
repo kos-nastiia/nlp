@@ -1,0 +1,22 @@
+{"input": "громадою", "expected_lemma": "громада", "expected_pos": "NOUN", "comment": "Відмінювання іменника"}
+{"input": "працюємо", "expected_lemma": "працювати", "expected_pos": "VERB", "comment": "Особова форма дієслова"}
+{"input": "відеореєстратора", "expected_lemma": "відеореєстратор", "expected_pos": "NOUN", "comment": "Складне технічне слово"}
+{"input": "найкращий", "expected_lemma": "хороший", "expected_pos": "ADJ", "comment": "Найвищий ступінь порівняння (суплетивізм)"}
+{"input": "стані", "expected_lemma": "стан", "expected_pos": "NOUN", "comment": "Чергування голосних а/і в корені"}
+{"input": "мати", "expected_lemma": "мати", "expected_pos": "VERB", "comment": "Омонімія: дієслово 'мати' чи іменник 'мати' (родичка)"}
+{"input": "замок", "expected_lemma": "замок", "expected_pos": "NOUN", "comment": "Омонімія: споруда чи пристрій для дверей"}
+{"input": "смартфону", "expected_lemma": "смартфон", "expected_pos": "NOUN", "comment": "Запозичене слово в родовому відмінку"}
+{"input": "відремонтовані", "expected_lemma": "відремонтувати", "expected_pos": "VERB", "comment": "Дієприкметник (Stanza часто маркує як VERB або ADJ)"}
+{"input": "швидко", "expected_lemma": "швидко", "expected_pos": "ADV", "comment": "Прислівник"}
+{"input": "п'ять", "expected_lemma": "п'ять", "expected_pos": "NUM", "comment": "Числівник з апострофом"}
+{"input": "Києва", "expected_lemma": "Київ", "expected_pos": "PROPN", "comment": "Власна назва (місто)"}
+{"input": "задоволений", "expected_lemma": "задоволений", "expected_pos": "ADJ", "comment": "Віддієслівний прикметник"}
+{"input": "немає", "expected_lemma": "немає", "expected_pos": "VERB", "comment": "Безособова форма"}
+{"input": "USB-порти", "expected_lemma": "usb-порт", "expected_pos": "NOUN", "comment": "Слово з дефісом та латиницею"}
+{"input": "під'їзді", "expected_lemma": "під'їзд", "expected_pos": "NOUN", "comment": "Слово з апострофом в середині"}
+{"input": "вчителів", "expected_lemma": "вчитель", "expected_pos": "NOUN", "comment": "Родовий відмінок множини"}
+{"input": "найгірший", "expected_lemma": "поганий", "expected_pos": "ADJ", "comment": "Найвищий ступінь порівняння (суплетивізм)"}
+{"input": "працювавши", "expected_lemma": "працювати", "expected_pos": "VERB", "comment": "Дієприслівник минулого часу"}
+{"input": "з'явився", "expected_lemma": "з'явитися", "expected_pos": "VERB", "comment": "Дієслово з апострофом"}
+{"input": "комп'ютерів", "expected_lemma": "комп'ютер", "expected_pos": "NOUN", "comment": "Слово з апострофом в середині"}
+{"input": "найкраще", "expected_lemma": "хорошо", "expected_pos": "ADV", "comment": "Найвищий ступінь порівняння прислівника (суплетивізм)"}
