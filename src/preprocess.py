@@ -2,7 +2,6 @@ import re
 
 class TextPreprocess:
     def __init__(self):
-        # Регулярні вирази для маскування (PII)
         self.url_pattern = r'https?://\S+|www\.\S+'
         self.email_pattern = r'\S+@\S+'
         self.phone_pattern = r'\+?\d{10,12}'
@@ -10,9 +9,7 @@ class TextPreprocess:
     def clean_text(self, text: str) -> str:
         """Базова технічна чистка: пробіли, лапки, юнікод."""
         if not isinstance(text, str): return ""
-        # Видаляємо зайві пробіли та символи переносу рядка
         text = re.sub(r'\s+', ' ', text).strip()
-        # Уніфікація апострофа
         text = re.sub(r"['’‘`]", "'", text)
         return text
 
@@ -27,17 +24,13 @@ class TextPreprocess:
     def normalize_text(self, text: str) -> str:
         """Нормалізація: нижній регістр та видалення пунктуації."""
         if not isinstance(text, str): return ""
-        # Нижній регістр
         text = text.lower()
-        # Видаляємо пунктуацію, але залишаємо маски <...>
-        # Видаляємо символи, які не є буквами, цифрами або кутовими дужками масок
         text = re.sub(r'(?<!<)[^\w\s<>](?!>)', '', text)
         return " ".join(text.split())
 
     def sentence_split(self, text: str) -> list:
         """Розбиття тексту на речення за крапкою, окликом або питанням."""
         if not isinstance(text, str): return []
-        # Використовуємо regex, який зберігає роздільник або просто ділить за ним
         sentences = re.split(r'(?<=[.!?])\s+', text)
         return [s.strip() for s in sentences if s.strip()]
 
@@ -52,5 +45,5 @@ class TextPreprocess:
             "original": text,
             "clean": masked,
             "sentences": normalized_sentences,
-            "final": " | ".join(normalized_sentences) # Результат для CSV
+            "final": " | ".join(normalized_sentences) 
         }
