@@ -1,0 +1,42 @@
+{"text_id": 1, "text": "Оренда квартири від 10.05.2024. Ціна 15000 грн.", "field_type": "DATE", "span_text": "10.05.2024", "start_char": 20, "end_char": 30, "normalized_value": "2024-05-10"}
+{"text_id": 1, "text": "Оренда квартири від 10.05.2024. Ціна 15000 грн.", "field_type": "AMOUNT", "span_text": "15000 грн", "start_char": 37, "end_char": 46, "normalized_value": "15000.0 UAH"}
+{"text_id": 2, "text": "Телефонуйте: +380671112233, Олександр.", "field_type": "PHONE", "span_text": "+380671112233", "start_char": 13, "end_char": 26, "normalized_value": "+380671112233"}
+{"text_id": 3, "text": "Квартира вільна з 1 червня 2024 року.", "field_type": "DATE", "span_text": "1 червня 2024", "start_char": 18, "end_char": 31, "normalized_value": "2024-06-01"}
+{"text_id": 4, "text": "Вартість 450$ + комунальні.", "field_type": "AMOUNT", "span_text": "450$", "start_char": 9, "end_char": 13, "normalized_value": "450.0 USD"}
+{"text_id": 5, "text": "Контакт: 093-444-55-66, Наталія.", "field_type": "PHONE", "span_text": "093-444-55-66", "start_char": 9, "end_char": 22, "normalized_value": "+380934445566"}
+{"text_id": 6, "text": "Здається з 15.12.2023 на тривалий термін.", "field_type": "DATE", "span_text": "15.12.2023", "start_char": 11, "end_char": 21, "normalized_value": "2023-12-15"}
+{"text_id": 7, "text": "Застава складає 10 000 UAH.", "field_type": "AMOUNT", "span_text": "10 000 UAH", "start_char": 16, "end_char": 26, "normalized_value": "10000.0 UAH"}
+{"text_id": 8, "text": "Мій номер: (050) 123 45 67.", "field_type": "PHONE", "span_text": "(050) 123 45 67", "start_char": 11, "end_char": 26, "normalized_value": "+380501234567"}
+{"text_id": 9, "text": "Актуально на 20 жовтня 2023.", "field_type": "DATE", "span_text": "20 жовтня 2023", "start_char": 13, "end_char": 27, "normalized_value": "2023-10-20"}
+{"text_id": 10, "text": "Ціна 1200 € за місяць.", "field_type": "AMOUNT", "span_text": "1200 €", "start_char": 5, "end_char": 11, "normalized_value": "1200.0 EUR"}
+{"text_id": 11, "text": "Пишіть у телеграм: 0639876543.", "field_type": "PHONE", "span_text": "0639876543", "start_char": 19, "end_char": 29, "normalized_value": "+380639876543"}
+{"text_id": 12, "text": "Опубліковано 01/01/2024.", "field_type": "DATE", "span_text": "01/01/2024", "start_char": 13, "end_char": 23, "normalized_value": "2024-01-01"}
+{"text_id": 13, "text": "Комісія 50% (7500 грн).", "field_type": "AMOUNT", "span_text": "7500 грн", "start_char": 13, "end_char": 21, "normalized_value": "7500.0 UAH"}
+{"text_id": 14, "text": "Номер власника: +38 (097) 000 00 00.", "field_type": "PHONE", "span_text": "+38 (097) 000 00 00", "start_char": 16, "end_char": 35, "normalized_value": "+380970000000"}
+{"text_id": 15, "text": "Договір підписано 12-05-2023.", "field_type": "DATE", "span_text": "12-05-2023", "start_char": 18, "end_char": 28, "normalized_value": "2023-05-12"}
+{"text_id": 16, "text": "Ціна знижена до 400 USD.", "field_type": "AMOUNT", "span_text": "400 USD", "start_char": 16, "end_char": 23, "normalized_value": "400.0 USD"}
+{"text_id": 17, "text": "Зв'язок: 80509998877.", "field_type": "PHONE", "span_text": "80509998877", "start_char": 9, "end_char": 20, "normalized_value": "+380509998877"}
+{"text_id": 18, "text": "Перегляд можливий 10 березня.", "field_type": "DATE", "span_text": "10 березня", "start_char": 18, "end_char": 28, "normalized_value": "None-03-10"}
+{"text_id": 19, "text": "Оренда 18 000 грн + лічильники.", "field_type": "AMOUNT", "span_text": "18 000 грн", "start_char": 7, "end_char": 17, "normalized_value": "18000.0 UAH"}
+{"text_id": 20, "text": "Дзвонити після 18:00, 0951112233.", "field_type": "PHONE", "span_text": "0951112233", "start_char": 22, "end_char": 32, "normalized_value": "+380951112233"}
+{"text_id": 21, "text": "Оновлено: 22.11.23.", "field_type": "DATE", "span_text": "22.11.23", "start_char": 10, "end_char": 18, "normalized_value": "2023-11-22"}
+{"text_id": 22, "text": "Продаж за 55,000$.", "field_type": "AMOUNT", "span_text": "55,000$", "start_char": 10, "end_char": 17, "normalized_value": "55000.0 USD"}
+{"text_id": 23, "text": "Тел. +380442345678 (офіс).", "field_type": "PHONE", "span_text": "+380442345678", "start_char": 5, "end_char": 18, "normalized_value": "+380442345678"}
+{"text_id": 24, "text": "Заїзд можливий з 01.09.", "field_type": "DATE", "span_text": "01.09", "start_char": 17, "end_char": 22, "normalized_value": "None-09-01"}
+{"text_id": 25, "text": "Комунальні близько 2500грн.", "field_type": "AMOUNT", "span_text": "2500грн", "start_char": 19, "end_char": 26, "normalized_value": "2500.0 UAH"}
+{"text_id": 26, "text": "Менеджер: 0670001122.", "field_type": "PHONE", "span_text": "0670001122", "start_char": 10, "end_char": 20, "normalized_value": "+380670001122"}
+{"text_id": 27, "text": "Дата угоди 14 лютого 2024.", "field_type": "DATE", "span_text": "14 лютого 2024", "start_char": 11, "end_char": 25, "normalized_value": "2024-02-14"}
+{"text_id": 28, "text": "Ціна 3000 евро.", "field_type": "AMOUNT", "span_text": "3000 евро", "start_char": 5, "end_char": 14, "normalized_value": "3000.0 EUR"}
+{"text_id": 29, "text": "Viber/WhatsApp: +380503332211.", "field_type": "PHONE", "span_text": "+380503332211", "start_char": 16, "end_char": 29, "normalized_value": "+380503332211"}
+{"text_id": 30, "text": "Побудовано в 2022 році.", "field_type": "DATE", "span_text": "2022", "start_char": 13, "end_char": 17, "normalized_value": "2022-None-None"}
+{"text_id": 31, "text": "Оренда 600 дол.", "field_type": "AMOUNT", "span_text": "600 дол", "start_char": 7, "end_char": 14, "normalized_value": "600.0 USD"}
+{"text_id": 32, "text": "Доп. номер: 044-555-66-77.", "field_type": "PHONE", "span_text": "044-555-66-77", "start_char": 12, "end_char": 25, "normalized_value": "+380445556677"}
+{"text_id": 33, "text": "Термін оренди від 01.10.2024 до 01.04.2025.", "field_type": "DATE", "span_text": "01.10.2024", "start_char": 18, "end_char": 28, "normalized_value": "2024-10-01"}
+{"text_id": 33, "text": "Термін оренди від 01.10.2024 до 01.04.2025.", "field_type": "DATE", "span_text": "01.04.2025", "start_char": 32, "end_char": 42, "normalized_value": "2025-04-01"}
+{"text_id": 34, "text": "Оплата 20000 грн + застава.", "field_type": "AMOUNT", "span_text": "20000 грн", "start_char": 7, "end_char": 16, "normalized_value": "20000.0 UAH"}
+{"text_id": 35, "text": "Рієлтор: 099-000-11-22.", "field_type": "PHONE", "span_text": "099-000-11-22", "start_char": 9, "end_char": 22, "normalized_value": "+380990001122"}
+{"text_id": 36, "text": "Створено 31 грудня.", "field_type": "DATE", "span_text": "31 грудня", "start_char": 9, "end_char": 18, "normalized_value": "None-12-31"}
+{"text_id": 37, "text": "Бюджет до 1000$.", "field_type": "AMOUNT", "span_text": "1000$", "start_char": 10, "end_char": 15, "normalized_value": "1000.0 USD"}
+{"text_id": 38, "text": "Дзвоніть за номером 0675554433.", "field_type": "PHONE", "span_text": "0675554433", "start_char": 20, "end_char": 30, "normalized_value": "+380675554433"}
+{"text_id": 39, "text": "Рік здачі 2025.", "field_type": "DATE", "span_text": "2025", "start_char": 10, "end_char": 14, "normalized_value": "2025-None-None"}
+{"text_id": 40, "text": "Здам за 14500 грн/міс.", "field_type": "AMOUNT", "span_text": "14500 грн", "start_char": 8, "end_char": 17, "normalized_value": "14500.0 UAH"}

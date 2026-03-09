@@ -1,0 +1,20 @@
+{"id": 1, "raw_text": "Оренда від 10.05.2024", "field_type": "DATE", "expected_behavior": "Нормалізація в 2024-05-10 [cite: 33]"}
+{"id": 2, "raw_text": "Ціна 500$", "field_type": "AMOUNT", "expected_behavior": "Витяг 500.0 USD [cite: 35]"}
+{"id": 3, "raw_text": "Площа 50 м2", "field_type": "AMOUNT", "expected_behavior": "Ігнорувати (не гроші) [cite: 92]"}
+{"id": 4, "raw_text": "Поверх 5/9", "field_type": "DATE", "expected_behavior": "Ігнорувати (схоже на дату DD/MM, але це поверх) [cite: 30]"}
+{"id": 5, "raw_text": "Телефонуйте: 067 123 45 67", "field_type": "PHONE", "expected_behavior": "Нормалізація в +380671234567 [cite: 35]"}
+{"id": 6, "raw_text": "Комісія 50%", "field_type": "AMOUNT", "expected_behavior": "Ігнорувати (відсоток не є AMOUNT) [cite: 92]"}
+{"id": 7, "raw_text": "Рік побудови 2010", "field_type": "DATE", "expected_behavior": "Ігнорувати (тільки рік без дня/місяця) [cite: 30]"}
+{"id": 8, "raw_text": "Ціна 15 000 грн за міс.", "field_type": "AMOUNT", "expected_behavior": "Витяг 15000.0 UAH (обробка пробілу в числі) [cite: 35]"}
+{"id": 9, "raw_text": "Вул. 20-річчя Перемоги", "field_type": "DATE", "expected_behavior": "Ігнорувати (частина назви вулиці) [cite: 30]"}
+{"id": 10, "raw_text": "Квартира за 45.500 USD", "field_type": "AMOUNT", "expected_behavior": "Витяг 45500.0 USD (крапка як розділювач тисяч) [cite: 35]"}
+{"id": 11, "raw_text": "Документи від 5 січня 2023", "field_type": "DATE", "expected_behavior": "Витяг 2023-01-05 через словник місяців [cite: 55]"}
+{"id": 12, "raw_text": "+38 (093) 111-22-33", "field_type": "PHONE", "expected_behavior": "Витяг з ігноруванням дужок та дефісів [cite: 35]"}
+{"id": 13, "raw_text": "ID замовлення 12345", "field_type": "PHONE", "expected_behavior": "Ігнорувати (схоже на частину номера, але це ID) [cite: 92]"}
+{"id": 14, "raw_text": "Опубліковано сьогодні", "field_type": "DATE", "expected_behavior": "Ігнорувати (відносна дата не підтримується) [cite: 30]"}
+{"id": 15, "raw_text": "Застава 200 €", "field_type": "AMOUNT", "expected_behavior": "Витяг 200.0 EUR через символ валюти [cite: 55]"}
+{"id": 16, "raw_text": "0442345678", "field_type": "PHONE", "expected_behavior": "Додати код країни: +380442345678 [cite: 35]"}
+{"id": 17, "raw_text": "2 кімн. кв.", "field_type": "AMOUNT", "expected_behavior": "Ігнорувати (кількість кімнат) [cite: 30]"}
+{"id": 18, "raw_text": "Ціна: 100 тис. грн", "field_type": "AMOUNT", "expected_behavior": "Витяг 100000.0 UAH (обробка слова 'тис.') [cite: 55]"}
+{"id": 19, "raw_text": "Термін до 01/25", "field_type": "DATE", "expected_behavior": "Ігнорувати (неповна дата MM/YY) [cite: 33]"}
+{"id": 20, "raw_text": "Номер договору №98765", "field_type": "PHONE", "expected_behavior": "Ігнорувати (використати '№' як анти-правило) [cite: 36, 81]"}
