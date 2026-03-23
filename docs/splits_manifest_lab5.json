@@ -1,0 +1,15 @@
+{
+    "strategy": "Stratified Random Split",
+    "seed": 42,
+    "split_proportions": "80/10/10",
+    "sizes": {
+        "train": 3556,
+        "val": 444,
+        "test": 445
+    },
+    "generation_datetime": "2026-03-17 22:18:37",
+    "columns_used_for_stratification": [
+        "temp_label (extracted from text_v2)"
+    ],
+    "columns_used_for_groups_or_time": "None (Random Split used)"
+}
