@@ -1,125 +1,132 @@
 import re
-from agents import KNOWN_SERVICES, SERVICE_TYPE_KW, ISSUE_KW
+from flow_state import FlowState
+
+KNOWN_SERVICES_MAP = {
+    "скайфлай": "авіакомпанія", "інгліш хаб": "школа",
+    "shimano": "спорт", "нова пошта": "доставка",
+    "монобанк": "банк", "приватбанк": "банк",
+}
+
+SERVICE_TYPE_KW = {
+    "авіакомпанія": ["авіакомпанія", "рейс", "літак"],
+    "кафе":         ["кафе", "кав'ярня", "каву", "смузі"],
+    "ресторан":     ["ресторан", "їжа", "страва"],
+    "доставка":     ["доставка", "замовлення", "кур'єр"],
+    "школа":        ["школа", "навчання", "курс"],
+    "готель":       ["готель", "апартаменти", "проживання"],
+    "медицина":     ["клінік", "лікар", "лікування"],
+}
+
+ISSUE_KW = {
+    "billing":  ["ціни", "ціна", "завищен", "грн", "платити", "шокують"],
+    "quality":  ["якість", "погано", "неякісн"],
+    "delivery": ["доставка", "затримка", "губиться"],
+    "support":  ["підтримка", "оператор", "дозвонитись"],
+    "logistics":["багаж", "рейс", "затримується"],
+}
 
 
-class FallbackAgent:
+def fallback_step(state: FlowState, max_attempts: int = 2) -> FlowState:
+    action = state.recommended_action or ""
 
-    NAME = "FallbackAgent"
+    if action in ("export", "export_with_warnings") and not state.fallback_triggered:
+        # Fallback не потрібен
+        return state
 
-    STRATEGIES = ["rule_repair", "partial_output", "manual_review"]
+    state.fallback_triggered = True
+    state.fallback_attempt  += 1
+    text = state.clean_text.lower()
+    output = dict(state.execute_output)
+    repaired = []
 
-    def run(self, text: str, extraction: dict, review: dict,
-            triage: dict, attempt: int = 1) -> dict:
-        issues  = review.get("issues", [])
-        verdict = review.get("verdict", "")
-        t = text.lower()
+    issues = state.validation_issues or []
 
-        repaired_fields = []
-        output = dict(extraction)
-        output.pop("agent", None)
-        warnings = []
-        repair_notes = []
+    for issue in issues:
+        field   = issue.get("field", "")
+        problem = issue.get("problem", "")
 
-        for issue in issues:
-            field   = issue.get("field", "")
-            problem = issue.get("problem", "")
+        if field == "sentiment" and "signal" in problem:
+            neg = any(kw in text for kw in ["жахлив","погано","розчарован","занадто","нікол"])
+            pos = any(kw in text for kw in ["чудово","відмінн","найкращ","задоволен","тішить"])
+            fixed = "negative" if neg and not pos else "positive" if pos and not neg else "mixed"
+            output["sentiment"] = fixed
+            repaired.append(f"sentiment → {fixed} (rule-fixed)")
 
-            if field == "sentiment" and "signal" in problem:
-                neg_sig = any(kw in t for kw in
-                    ["жахлив","погано","розчарован","завищен","нікол","занадто","шокують"])
-                pos_sig = any(kw in t for kw in
-                    ["чудово","відмінн","найкращ","задоволен","тішить"])
-                if neg_sig and not pos_sig:
-                    output["sentiment"] = "negative"
-                    repaired_fields.append("sentiment → negative (rule)")
-                elif pos_sig and not neg_sig:
-                    output["sentiment"] = "positive"
-                    repaired_fields.append("sentiment → positive (rule)")
-                elif neg_sig and pos_sig:
-                    output["sentiment"] = "mixed"
-                    repaired_fields.append("sentiment → mixed (rule)")
-
-            if field == "mentioned_price" and "hallucination" in problem:
-                pm = re.search(r'(\d+)\s*(грн|гривень|\$|євро)', text, re.I)
-                if pm:
-                    try:
-                        output["mentioned_price"] = float(pm.group(1))
-                        c = pm.group(2).lower()
-                        output["currency"] = "UAH" if c in ("грн","гривень") else "USD" if c=="$" else "EUR"
-                        repaired_fields.append(f"mentioned_price verified via regex: {output['mentioned_price']}")
-                    except Exception:
-                        output["mentioned_price"] = None
-                        output["currency"] = None
-                        repaired_fields.append("mentioned_price nullified (no valid number)")
-                else:
+        # Nullify hallucinated price
+        if field == "mentioned_price" and "hallucination" in problem:
+            pm = re.search(r'(\d+)\s*(грн|gривень|\$|євро)', state.clean_text, re.I)
+            if pm:
+                try:
+                    output["mentioned_price"] = float(pm.group(1))
+                    output["currency"] = "UAH" if pm.group(2).lower() in ("грн","гривень") else "USD"
+                    repaired.append(f"mentioned_price re-verified: {output['mentioned_price']}")
+                except Exception:
                     output["mentioned_price"] = None
-                    output["currency"] = None
-                    repaired_fields.append("mentioned_price nullified (hallucination confirmed)")
+                    output["currency"]        = None
+                    repaired.append("mentioned_price nullified (hallucination)")
+            else:
+                output["mentioned_price"] = None
+                output["currency"]        = None
+                repaired.append("mentioned_price nullified (hallucination confirmed)")
 
-            if field == "service_name" and "not in text" in problem:
-                real_name = next(
-                    (n for n in sorted(KNOWN_SERVICES, key=len, reverse=True) if n in t),
-                    None
-                )
-                output["service_name"] = real_name
-                repaired_fields.append(f"service_name → {real_name} (re-extracted from text)")
+        # Nullify hallucinated service_name
+        if field == "service_name" and "not found in text" in problem:
+            real = next((n for n in sorted(KNOWN_SERVICES_MAP, key=len, reverse=True)
+                         if n in text), None)
+            output["service_name"] = real
+            repaired.append(f"service_name → {real} (re-verified)")
 
-            if field == "issue_type" and "positive" in problem:
-                output["issue_type"] = None
-                repaired_fields.append("issue_type nullified (sentiment=positive)")
+        # Fix issue_type on positive sentiment
+        if field == "issue_type" and "positive" in problem:
+            output["issue_type"] = None
+            repaired.append("issue_type nullified (sentiment=positive)")
 
-            if "required" in problem and "missing" in problem:
-                if field == "service_type":
-                    svc_sc = {s: sum(1 for kw in kws if kw in t)
-                               for s, kws in SERVICE_TYPE_KW.items()}
-                    svc_sc = {k:v for k,v in svc_sc.items() if v > 0}
-                    if svc_sc:
-                        output["service_type"] = max(svc_sc, key=svc_sc.get)
-                        repaired_fields.append(f"service_type re-extracted: {output['service_type']}")
-                    else:
-                        warnings.append(f"service_type still missing after repair")
+        # Recover missing required fields
+        if "required field" in problem and "missing" in problem:
+            if field == "service_type":
+                svc_sc = {s: sum(1 for kw in kws if kw in text)
+                          for s, kws in SERVICE_TYPE_KW.items()}
+                svc_sc = {k: v for k, v in svc_sc.items() if v > 0}
+                if svc_sc:
+                    output["service_type"] = max(svc_sc, key=svc_sc.get)
+                    repaired.append(f"service_type recovered: {output['service_type']}")
+            elif field == "issue_type":
+                iss_sc = {i: sum(1 for kw in kws if kw in text)
+                          for i, kws in ISSUE_KW.items()}
+                iss_sc = {k: v for k, v in iss_sc.items() if v > 0}
+                if iss_sc:
+                    output["issue_type"] = max(iss_sc, key=iss_sc.get)
+                    repaired.append(f"issue_type recovered: {output['issue_type']}")
 
-                elif field == "issue_type":
-                    issue_sc = {i: sum(1 for kw in kws if kw in t)
-                                 for i, kws in ISSUE_KW.items()}
-                    issue_sc = {k:v for k,v in issue_sc.items() if v > 0}
-                    if issue_sc:
-                        output["issue_type"] = max(issue_sc, key=issue_sc.get)
-                        repaired_fields.append(f"issue_type re-extracted: {output['issue_type']}")
-                    else:
-                        warnings.append(f"issue_type still missing after repair")
+    required = state.required_fields
+    still_missing = [f for f in required if output.get(f) is None]
 
-        required = triage.get("required_fields", [])
-        still_missing = [f for f in required if output.get(f) is None]
+    if repaired and not still_missing:
+        strategy    = "rule_repair"
+        fallback_ok = True
+        state.execute_output = output
+        state.validation_ok  = True
+        state.status         = "repaired"
+        for r in repaired:
+            state.add_warning("fallback", f"repaired: {r}")
 
-        if still_missing and attempt >= 2:
-            for f in still_missing:
-                warnings.append(f"field '{f}' still missing after {attempt} repair attempts")
-            output["needs_manual_review"] = True
-            strategy = "manual_review"
-            repair_notes.append(f"Repair failed after {attempt} attempts; flagged for manual review")
-        elif repaired_fields:
-            strategy = "rule_repair"
-            output["needs_manual_review"] = False
-        elif still_missing:
-            strategy = "partial_output"
-            output["needs_manual_review"] = True
-            warnings.append("partial output — some required fields could not be recovered")
-        else:
-            strategy = "rule_repair"
-            output["needs_manual_review"] = False
+    elif state.fallback_attempt >= max_attempts:
+        strategy    = "safe_failure"
+        fallback_ok = False
+        state.needs_manual_review = True
+        state.status = "manual_review_required"
+        for f in still_missing:
+            state.add_warning("fallback", f"field '{f}' still missing after {state.fallback_attempt} attempts")
 
-        if repaired_fields:
-            repair_notes.extend(repaired_fields)
+    else:
+        strategy    = "partial_export"
+        fallback_ok = False
+        state.needs_manual_review = True
+        state.status = "partial"
+        state.add_warning("fallback", "partial output — some required fields missing")
 
-        return {
-            "agent":               self.NAME,
-            "strategy":            strategy,
-            "repaired":            len(repaired_fields) > 0,
-            "repaired_fields":     repaired_fields,
-            "output":              output,
-            "needs_manual_review": output.get("needs_manual_review", False),
-            "warnings":            warnings,
-            "repair_notes":        "; ".join(repair_notes) if repair_notes else "no repair needed",
-            "attempt":             attempt,
-        }
+    state.fallback_strategy = strategy
+    state.fallback_ok       = fallback_ok
+    state.execute_output    = output
+    state.mark_step("fallback", ok=fallback_ok)
+    return state
